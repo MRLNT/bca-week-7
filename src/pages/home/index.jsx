@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './home.css'
-import Navbar from '../../components/navbar/navbar';
-import Card from '../../components/card/card';
+import Navbar from '../../components/navbar/Navbar';
 import axios from 'axios';
+import Card from '../../components/card/card';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
