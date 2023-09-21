@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './home.css'
-// import Navbar from '../../components/navbar/Navbar';
+import Navbar from '../../components/navbar/navbar';
 import axios from 'axios';
 import Card from '../../components/card/card';
 
@@ -23,7 +23,7 @@ const Home = () => {
     return (
         <div className='container'>
             {/* navbar */}
-            {/* <Navbar /> */}
+            <Navbar />
             {/* main section */}
             <main>
                 <section className='header'>
