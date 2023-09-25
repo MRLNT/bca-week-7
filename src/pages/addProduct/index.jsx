@@ -1,6 +1,8 @@
 import { useState } from "react"
 import Layoutv1 from "../auth/v1";
 import { addProduct } from "../services/product";
+import FormProduct from "../formAddEditProduct/FormProduct";
+import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -9,10 +11,11 @@ const AddProduct = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [desc, setDesc] = useState("");
 
+  const navigate = useNavigate();
+
   const saveData = async (e) => {
     try {
       e.preventDefault();
-
       const data = {
         name,
         price,
@@ -20,11 +23,8 @@ const AddProduct = () => {
         image: imgUrl,
         description: desc,
       };
-
       console.log(data);
-
       const res = await addProduct(data);
-
       console.log(res);
       alert(res.data);
       setDesc("");
@@ -32,65 +32,31 @@ const AddProduct = () => {
       setImgUrl("");
       setName("");
       setPrice(0);
+
+      navigate("/");
     } catch (error) {
       console.log(error.response);
     }
   };
-
   return (
     <Layoutv1>
       <h2>Add Product</h2>
-      <div className="form-container my-5">
-        <div className="input-group mb-3">
-          <span className="input-group-text">Product Name</span>
-          <input
-            type="text"
-            className="form-control"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <span className="input-group-text">Price</span>
-          <input
-            type="number"
-            className="form-control"
-            onChange={(e) => setPrice(e.target.value)}
-            value={price}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <span className="input-group-text">Image Title</span>
-          <input
-            type="text"
-            className="form-control"
-            onChange={(e) => setImgTitle(e.target.value)}
-            value={imgTitle}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <span className="input-group-text">Image URL</span>
-          <input
-            type="text"
-            className="form-control"
-            onChange={(e) => setImgUrl(e.target.value)}
-            value={imgUrl}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <span className="input-group-text">Description</span>
-          <textarea
-            className="form-control"
-            onChange={(e) => setDesc(e.target.value)}
-            value={desc}
-          ></textarea>
-        </div>
-      </div>
+      <FormProduct
+        name={name}
+        price={price}
+        imgTitle={imgTitle}
+        imgUrl={imgUrl}
+        desc={desc}
+        onChangeName={(e) => setName(e.target.value)}
+        onChangePrice={(e) => setPrice(e.target.value)}
+        onChangeImgTitle={(e) => setImgTitle(e.target.value)}
+        onChangeImageUrl={(e) => setImgUrl(e.target.value)}
+        onChangeDesc={(e) => setDesc(e.target.value)}
+      />
       <button className="btn btn-success" onClick={(e) => saveData(e)}>
         Save
       </button>
     </Layoutv1>
   );
 };
-
 export default AddProduct;
