@@ -9,9 +9,13 @@ function Navbar() {
           <Link to={'/add'}>Add Product</Link>
         </div>
         <div className="btn-group">
-            <div className="btn-login">Login</div>
-            <div className="btn-register">Reegister</div>
-        </div>
+          <Link to={"/login"} className="btn-login">
+            Login
+          </Link>
+          <Link to={"/register"} className="btn-registe">
+            Register
+          </Link>
+      </div>
     </nav>
   );
 }
