@@ -2,13 +2,15 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/home'
 import DetailProduct from './pages/detail'
+import AddProduct from './pages/addProduct';
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/prod/:id' element={<DetailProduct />} />
+        <Route path='/product/:id' element={<DetailProduct />} />
+        <Route path='/add' element={<AddProduct />} />
       </Routes>
     </BrowserRouter>
   );

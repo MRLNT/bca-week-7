@@ -3,51 +3,93 @@ import './home.css'
 import axios from 'axios';
 import Navbar from '../navbar/navbar';
 import Card from '../card/card';
+import Layoutv1 from '../auth/v1';
+import { getProducts } from "../services/product";
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [searchVal, setSearchValue] = useState("");
+  // const [prodSearch, setProdSearch] = useState([]);
 
-    const getData = async () => {
-        try {
-            const data = await axios.get('http://hplussport.com/api/products');
-            console.log(data, "from axios");
-            console.log(data.data, "datanya");
-            setProducts(data.data);
-        } catch (error) {
-            console.log(error);
-        }
+  const getData = async () => {
+    try {
+      const data = await getProducts();
+      console.log(data, "from axios");
+      // console.log(data.data, "datanya");
+      setProducts(data.data);
+      return data.data;
+    } catch (error) {
+      console.log(error);
     }
-    useEffect(() => {
-        getData();
-    }, []);
-    return (
-        <div className='container'>
-            {/* navbar */}
-            <Navbar />
-            {/* main section */}
-            <main>
-                <section className='header'>
-                    <h2>Products</h2>
-                    <div className="input">
-                        <input type="text" name='search' id='search' />
-                    </div>
-                </section>
-                <section className="prod">
-                    {products.map((p) => {
-                        return (
-                            <Card
-                                key={p.id}
-                                imgProd={p.image}
-                                price={p.price}
-                                name={p.name}
-                                id={p.id}
-                            />
-                        );
-                    })}
-                </section>
-            </main>
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // const searchProduct = () => {
+  //   if (searchVal === "") {
+  //     const data = getData();
+  //     setProducts(data);
+  //     return;
+  //   }
+
+  //   setProducts(result);
+  // };
+
+  const result = products.filter((product) =>
+    product.name.toLowerCase().includes(searchVal.toLowerCase())
+  );
+
+  return (
+    <Layoutv1>
+      {/* isi di dalam sini akan masuk sebagai children */}
+
+      <section className="header">
+        <h2>Products</h2>
+        <div className="input">
+          <input
+            type="text"
+            name="search"
+            id="search"
+            value={searchVal}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          {/* <button className="btn btn-info" onClick={searchProduct}>
+            Search
+          </button> */}
         </div>
-    );
+      </section>
+
+      <section className="prod">
+        {/* card product */}
+        {/* <Card
+            imgProd={
+              "https://images.unsplash.com/photo-1515037893149-de7f840978e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1388&q=80"
+            }
+            price={`Rp ${100000}`}
+            name={"Brownies"}
+            id={"1"}
+          /> */}
+
+        {products ? (
+          result.map((p) => {
+            return (
+              <Card
+                key={p.id}
+                imgProd={p.image}
+                price={`Rp ${p.price}`}
+                name={p.name}
+                id={p.id}
+              />
+            );
+          })
+        ) : (
+          <p>No Data!</p>
+        )}
+      </section>
+    </Layoutv1>
+  );
 };
 
 export default Home;

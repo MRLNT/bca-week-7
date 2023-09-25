@@ -1,15 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 100%;
-    background-color: lightblue;
-}
-
-
-
 /* main */
 .header {
     display: flex;
